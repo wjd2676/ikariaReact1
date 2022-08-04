@@ -8,29 +8,38 @@ const Main = () => {
   const [hospitalName, setHospitalName] = useState(undefined);
   const [roomName, setRoomName] = useState(undefined);
   const navigate = useNavigate();
+
   const goToListPage = () => {
-    navigate(`/Result?hospitalName=${hospitalName}roomName=${roomName}`);
+    if (hospitalName && roomName) {
+      navigate(`/Result?hospitalName=${hospitalName}&roomName=${roomName}`);
+    } else return alert("병원 이름과 방번호를 선택해주세요");
+  };
+
+  const initButton = () => {
+    setHospitalName(undefined);
+    setRoomName(undefined);
   };
 
   return (
-    <>
-      <MainContainer>
-        <MainContent>
-          <IkariaImage src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
-          <SenaManagerImage>SenaManager</SenaManagerImage>
-          <MainDropDown
-            hospitalName={hospitalName}
-            setHospitalName={setHospitalName}
-            roomName={roomName}
-            setRoomName={setRoomName}
-          />
+    <MainContainer>
+      <MainContent>
+        <IkariaImage src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
+        <SenaManagerImage>SenaManager</SenaManagerImage>
+        <MainDropDown
+          hospitalName={hospitalName}
+          setHospitalName={setHospitalName}
+          roomName={roomName}
+          setRoomName={setRoomName}
+        />
+        <ButtonContainer>
           <SearchButton onClick={goToListPage}>검색</SearchButton>
-        </MainContent>
-        <SideContainer>
-          <MainImage src={mainimg} />
-        </SideContainer>
-      </MainContainer>
-    </>
+          <SearchButton onClick={initButton}>초기화</SearchButton>
+        </ButtonContainer>
+      </MainContent>
+      <SideContainer>
+        <MainImage src={mainimg} />
+      </SideContainer>
+    </MainContainer>
   );
 };
 
@@ -43,8 +52,6 @@ const MainContainer = styled.div`
 
 const SideContainer = styled.div`
   width: 50%;
-  height: 500px;
-  border: red 3px solid;
 `;
 
 const MainImage = styled.img`
@@ -54,7 +61,6 @@ const MainImage = styled.img`
 
 const MainContent = styled.div`
   width: 30%;
-  border: 3px green solid;
 `;
 
 const IkariaImage = styled.img`
@@ -65,13 +71,30 @@ const IkariaImage = styled.img`
 
 const SenaManagerImage = styled.div`
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 500;
   margin-bottom: 20px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  width: 100%;
+  height: 35px;
+`;
+
 const SearchButton = styled.button`
-  font-size: 25px;
+  width: 100px;
+  height: 35px;
+  font-size: 20px;
+  background-color: white;
+  opacity: 0.4;
+  &:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
 `;
 
 export default Main;

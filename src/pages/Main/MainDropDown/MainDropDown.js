@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import { TreeSelect } from "antd";
 import "antd/dist/antd.css";
+import styled from "styled-components";
 
 const { TreeNode } = TreeSelect;
 
@@ -16,14 +16,13 @@ const MainDropDown = (props) => {
     setRoomName(newValue);
   };
 
-  console.log(hospitalName);
-
   return (
-    <div>
+    <DropDownContainer>
       <TreeSelect
         showSearch
         style={{
           width: "90%",
+          marginTop: "20px",
         }}
         value={hospitalName}
         dropdownStyle={{
@@ -45,6 +44,7 @@ const MainDropDown = (props) => {
           showSearch
           style={{
             width: "90%",
+            marginTop: "20px",
           }}
           value={roomName}
           dropdownStyle={{
@@ -62,8 +62,14 @@ const MainDropDown = (props) => {
           <TreeNode value="RoomNumber4" title="RoomNumber4" />
         </TreeSelect>
       )}
-    </div>
+    </DropDownContainer>
   );
 };
+
+const DropDownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default MainDropDown;

@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "snap_shot_number": "G00001",
+    "test_time": "00:01:06",
+    "detect_polyp": "yes",
+    "remove_polyp": "no"
+  },
+
+  {
+    "id": 2,
+    "snap_shot_number": "G00002",
+    "test_time": "00:02:16",
+    "detect_polyp": "yes",
+    "remove_polyp": "yes"
+  },
+
+  {
+    "id": 3,
+    "snap_shot_number": "G00003",
+    "test_time": "00:04:31",
+    "detect_polyp": "yes",
+    "remove_polyp": "no"
+  },
+
+  {
+    "id": 4,
+    "snap_shot_number": "G00004",
+    "test_time": "00:06:11",
+    "detect_polyp": "yes",
+    "remove_polyp": "no"
+  },
+
+  {
+    "id": 5,
+    "snap_shot_number": "G00005",
+    "test_time": "00:08:33",
+    "detect_polyp": "yes",
+    "remove_polyp": "no"
+  },
+  {
+    "id": 6,
+    "snap_shot_number": "G00006",
+    "test_time": "00:09:10",
+    "detect_polyp": "yes",
+    "remove_polyp": "no"
+  }
+]
