@@ -24,6 +24,14 @@ const CreateReport = () => {
     navigate("/");
   };
 
+  const goToPrev = () => {
+    navigate(`/Result${decodeUri}`);
+  };
+
+  const goToNext = () => {
+    navigate("/PatientReport");
+  };
+
   const decodeUri = decodeURI(location.search);
 
   const hospitalNameStart = decodeUri.indexOf(`=`);
@@ -31,6 +39,8 @@ const CreateReport = () => {
   const hospitalName = decodeUri.slice(hospitalNameStart + 1, hospitalNameEnd);
 
   const roomNumber = decodeUri.slice(hospitalNameEnd + 10);
+
+  console.log(decodeUri);
 
   useEffect(() => {
     fetch("http://localhost:3000/data/snapshot.json")
@@ -96,6 +106,10 @@ const CreateReport = () => {
               <InfoContent>2022/04/26</InfoContent>
             </TestRow>
           </ManagerTestInfo>
+          <ButtonContainer>
+            <PrevButton onClick={goToPrev}>이전페이지로</PrevButton>
+            <NextButton onClick={goToNext}>리포트페이지로</NextButton>
+          </ButtonContainer>
         </TestInfo>
         <SnapShotInfo>
           {snapShotData.map((data) => (
@@ -195,9 +209,16 @@ const InfoContent = styled.div`
   font-weight: 300;
 `;
 
+const ButtonContainer = styled.div``;
+
+const PrevButton = styled.button``;
+
+const NextButton = styled.button``;
+
 const SnapShotInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   width: 100%;
   margin-top: 55px;
 `;
