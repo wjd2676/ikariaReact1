@@ -29,18 +29,13 @@ const CreateReport = () => {
   };
 
   const goToNext = () => {
-    navigate("/PatientReport");
+    navigate(`/PatientReport/${decodeUri}`);
   };
 
   const decodeUri = decodeURI(location.search);
 
-  const hospitalNameStart = decodeUri.indexOf(`=`);
-  const hospitalNameEnd = decodeUri.indexOf("&");
-  const hospitalName = decodeUri.slice(hospitalNameStart + 1, hospitalNameEnd);
-
-  const roomNumber = decodeUri.slice(hospitalNameEnd + 10);
-
-  console.log(decodeUri);
+  const roomNumberStart = decodeUri.indexOf(`=`);
+  const roomNumber = decodeUri.slice(roomNumberStart + 1);
 
   useEffect(() => {
     fetch("http://localhost:3000/data/snapshot.json")
@@ -48,18 +43,16 @@ const CreateReport = () => {
       .then((res) => setSnapShotData(res));
   }, []);
 
-  console.log(snapShotData);
-
   return (
     <div>
       <ResultNav>
         <SenaManagerImage onClick={goToMain}>SenaManager</SenaManagerImage>
         <SearchInfo>
-          <HospitalInfo onClick={showModal}>{hospitalName}</HospitalInfo>
+          <HospitalInfo onClick={showModal}>서울대학교병원</HospitalInfo>
           <div>{roomNumber}</div>
         </SearchInfo>
         <Modal
-          title={hospitalName}
+          title="서울대학교병원"
           visible={isModalVisible}
           onCancel={handleCancel}
           footer={null}
