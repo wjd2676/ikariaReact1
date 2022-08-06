@@ -5,18 +5,16 @@ import MainDropDown from "./MainDropDown/MainDropDown";
 import { useNavigate } from "react-router-dom";
 
 const Main = () => {
-  const [hospitalName, setHospitalName] = useState(undefined);
   const [roomName, setRoomName] = useState(undefined);
   const navigate = useNavigate();
 
   const goToListPage = () => {
-    if (hospitalName && roomName) {
-      navigate(`/Result?hospitalName=${hospitalName}&roomName=${roomName}`);
+    if (roomName) {
+      navigate(`/Result?roomName=${roomName}`);
     } else return alert("병원 이름과 방번호를 선택해주세요");
   };
 
   const initButton = () => {
-    setHospitalName(undefined);
     setRoomName(undefined);
   };
 
@@ -25,12 +23,7 @@ const Main = () => {
       <MainContent>
         <IkariaImage src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
         <SenaManagerImage>SenaManager</SenaManagerImage>
-        <MainDropDown
-          hospitalName={hospitalName}
-          setHospitalName={setHospitalName}
-          roomName={roomName}
-          setRoomName={setRoomName}
-        />
+        <MainDropDown roomName={roomName} setRoomName={setRoomName} />
         <ButtonContainer>
           <SearchButton onClick={goToListPage}>검색</SearchButton>
           <SearchButton onClick={initButton}>초기화</SearchButton>

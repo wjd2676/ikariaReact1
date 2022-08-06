@@ -70,7 +70,7 @@ const CreateReport = () => {
           </p>
           <p>병원 연락처 : 111-1111-1111 </p>
         </Modal>
-        <IkariaIcon src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
+        <IkariaIcon src="http://endoai.co.kr/static/common/assets/logo.png" />
       </ResultNav>
       <ReportContainer>
         <TestInfo>

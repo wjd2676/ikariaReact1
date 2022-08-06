@@ -26,11 +26,8 @@ const Result = () => {
 
   const decodeUri = decodeURI(location.search);
 
-  const hospitalNameStart = decodeUri.indexOf(`=`);
-  const hospitalNameEnd = decodeUri.indexOf("&");
-  const hospitalName = decodeUri.slice(hospitalNameStart + 1, hospitalNameEnd);
-
-  const roomNumber = decodeUri.slice(hospitalNameEnd + 10);
+  const roomNumberStart = decodeUri.indexOf(`=`);
+  const roomNumber = decodeUri.slice(roomNumberStart + 1);
 
   const goToReport = (e) => {
     // console.log(e);
@@ -49,11 +46,11 @@ const Result = () => {
       <ResultNav>
         <SenaManagerImage onClick={goToMain}>SenaManager</SenaManagerImage>
         <SearchInfo>
-          <HospitalInfo onClick={showModal}>{hospitalName}</HospitalInfo>
+          <HospitalInfo onClick={showModal}>서울대학교병원</HospitalInfo>
           <div>{roomNumber}</div>
         </SearchInfo>
         <Modal
-          title={hospitalName}
+          title="서울대학교병원"
           visible={isModalVisible}
           onCancel={handleCancel}
           footer={null}
@@ -64,25 +61,54 @@ const Result = () => {
           </p>
           <p>병원 연락처 : 111-1111-1111 </p>
         </Modal>
-        <IkariaIcon src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
+        <IkariaIcon src="http://endoai.co.kr/static/common/assets/logo.png" />
       </ResultNav>
       <ResultContainer>
         {resultData.map((data) => (
-          <ResultInfo key={data.id}>
-            <div>날짜 : {data.date}</div>
-            <div>검사번호 : {data.test_number}</div>
-            <div>환자번호 : {data.patient_number}</div>
-            <div>검사자이름 : {data.doctor}</div>
-            <div>검사소요시간 : {data.test_timetaken}</div>
+          <ResultCard key={data.id}>
+            <ResultCardContent>
+              <div>날짜 : {data.date}</div>
+              <div>검사번호 : {data.test_number}</div>
+              <div>환자번호 : {data.patient_number}</div>
+              <div>검사자이름 : {data.doctor}</div>
+              <div>검사소요시간 : {data.test_timetaken}</div>
+            </ResultCardContent>
             <GoToReport onClick={() => goToReport(data.id)}>
               gotoReport
             </GoToReport>
-          </ResultInfo>
+          </ResultCard>
         ))}
       </ResultContainer>
+      <Footer />
     </div>
   );
 };
+
+const Footer = styled.div`
+  width: 100%;
+  height: 300px;
+  border: solid 1px red;
+`;
+
+const ResultCard = styled.div`
+  width: 300px;
+  position: relative;
+  border-top: 1px solid #eee;
+  overflow: hidden;
+  padding: 0 0 32px;
+  margin: 48px auto 0;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  text-decoration: none;
+  position: relative;
+  padding: 10px 0px;
+  color: #636363;
+`;
+
+const ResultCardContent = styled.div`
+  padding: 30px;
+`;
 
 const ResultNav = styled.div`
   display: flex;
@@ -128,21 +154,8 @@ const SenaManagerImage = styled.div`
 const ResultContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
   width: 100%;
   height: 100%;
-`;
-
-const ResultInfo = styled.div`
-  position: relative;
-  width: 400px;
-  height: 100%;
-  margin: 40px;
-  padding: 20px;
-  border: 1px solid #c9c7c7;
-  background-color: #c9c7c7;
-  border-radius: 16px;
-  box-shadow: inset 0 0 8px #6b6565;
 `;
 
 const GoToReport = styled.button`

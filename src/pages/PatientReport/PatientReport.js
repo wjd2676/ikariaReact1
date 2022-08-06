@@ -1,7 +1,35 @@
 import React from "react";
 import styled from "styled-components";
+import { useScript } from "../../hook";
+import { useEffect } from "react";
+import KaKaoButton from "../../assets/images/KaKaoButton.png";
 
 const PatientReport = () => {
+  // kakao SDK import하기
+  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
+
+  const currentUrl = window.location.href;
+
+  console.log(currentUrl);
+
+  // kakao sdk 초기화하기
+  // status가 변경될 때마다 실행되며, status가 ready일 때 초기화를 시도합니다.
+  useEffect(() => {
+    if (status === "ready" && window.Kakao) {
+      // 중복 initialization 방지
+      if (!window.Kakao.isInitialized()) {
+        // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
+        window.Kakao.init("2e862a308e93704d6414d61d8159dcc1");
+      }
+    }
+  }, [status]);
+
+  const handleKakaoButton = () => {
+    window.Kakao.Link.sendScrap({
+      requestUrl: currentUrl,
+    });
+  };
+
   return (
     <PatientReportContainer>
       <ResultNav>
@@ -125,6 +153,13 @@ const PatientReport = () => {
           </ReportCoulmn>
         </ReportContent>
       </ReportContainer>
+      <ReportShareContainer>
+        <KakaoShareButton onClick={handleKakaoButton}>
+          <KakaoIcon src={KaKaoButton}></KakaoIcon>
+        </KakaoShareButton>
+        <button>2</button>
+        <button>3</button>
+      </ReportShareContainer>
     </PatientReportContainer>
   );
 };
@@ -218,6 +253,18 @@ const ReportRow = styled.div`
 const ReportCoulmn = styled.div`
   margin: 10px 0;
   font-size: 18px;
+`;
+
+const ReportShareContainer = styled.div``;
+
+const KakaoShareButton = styled.a`
+  cursor: pointer;
+`;
+
+const KakaoIcon = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
 `;
 
 export default PatientReport;

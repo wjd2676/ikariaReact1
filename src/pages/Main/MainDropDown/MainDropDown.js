@@ -6,11 +6,7 @@ import styled from "styled-components";
 const { TreeNode } = TreeSelect;
 
 const MainDropDown = (props) => {
-  const { hospitalName, setHospitalName, roomName, setRoomName } = props;
-
-  const hospitalNameHandle = (newValue) => {
-    setHospitalName(newValue);
-  };
+  const { roomName, setRoomName } = props;
 
   const roomNameHandle = (newValue) => {
     setRoomName(newValue);
@@ -18,50 +14,28 @@ const MainDropDown = (props) => {
 
   return (
     <DropDownContainer>
+      <HospitalTitle> 서울대학교병원</HospitalTitle>
       <TreeSelect
         showSearch
         style={{
           width: "90%",
           marginTop: "20px",
         }}
-        value={hospitalName}
+        value={roomName}
         dropdownStyle={{
           maxHeight: 400,
           overflow: "auto",
         }}
-        placeholder="병원 선택"
+        placeholder="방 번호 선택"
         allowClear
         treeDefaultExpandAll
-        onChange={hospitalNameHandle}
+        onChange={roomNameHandle}
       >
-        <TreeNode value="병원이름1" title="병원이름1" />
-        <TreeNode value="병원이름2" title="병원이름2" />
-        <TreeNode value="병원이름3" title="병원이름3" />
-        <TreeNode value="병원이름4" title="병원이름4" />
+        <TreeNode value="RoomNumber1" title="RoomNumber1" />
+        <TreeNode value="RoomNumber2" title="RoomNumber2" />
+        <TreeNode value="RoomNumber3" title="RoomNumber3" />
+        <TreeNode value="RoomNumber4" title="RoomNumber4" />
       </TreeSelect>
-      {hospitalName && (
-        <TreeSelect
-          showSearch
-          style={{
-            width: "90%",
-            marginTop: "20px",
-          }}
-          value={roomName}
-          dropdownStyle={{
-            maxHeight: 400,
-            overflow: "auto",
-          }}
-          placeholder="방 번호 선택"
-          allowClear
-          treeDefaultExpandAll
-          onChange={roomNameHandle}
-        >
-          <TreeNode value="RoomNumber1" title="RoomNumber1" />
-          <TreeNode value="RoomNumber2" title="RoomNumber2" />
-          <TreeNode value="RoomNumber3" title="RoomNumber3" />
-          <TreeNode value="RoomNumber4" title="RoomNumber4" />
-        </TreeSelect>
-      )}
     </DropDownContainer>
   );
 };
@@ -70,6 +44,11 @@ const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const HospitalTitle = styled.div`
+  font-weight: 700;
+  font-size: 33px;
 `;
 
 export default MainDropDown;
