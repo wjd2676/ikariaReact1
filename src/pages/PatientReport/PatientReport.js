@@ -7,6 +7,7 @@ import html2canvas from "html2canvas";
 import KaKaoButton from "../../assets/images/KaKaoButton.png";
 import PdfButton from "../../assets/images/pdfIcon.png";
 import GmailButton from "../../assets/images/gmailIcon.png";
+import { EmailShareButton } from "react-share";
 
 const PatientReport = () => {
   const location = useLocation();
@@ -20,6 +21,8 @@ const PatientReport = () => {
   const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
 
   const currentUrl = "http://localhost:3000" + window.location.pathname;
+
+  const ReportUrl = window.location.href;
 
   // kakao sdk 초기화하기
   // status가 변경될 때마다 실행되며, status가 ready일 때 초기화를 시도합니다.
@@ -188,9 +191,9 @@ const PatientReport = () => {
         <HttpToPdf onClick={onCapture}>
           <PdfIcon src={PdfButton}></PdfIcon>
         </HttpToPdf>
-        <GmailShare>
+        <EmailShareButton subject="Report" body={ReportUrl}>
           <GmailIcon src={GmailButton}></GmailIcon>
-        </GmailShare>
+        </EmailShareButton>
         <PrevButton onClick={goToPrev}></PrevButton>
       </ReportShareContainer>
       <ReportFooter />
@@ -306,6 +309,8 @@ const KakaoIcon = styled.img`
 
 const HttpToPdf = styled.button`
   cursor: pointer;
+  border: 0;
+  background: none;
 `;
 
 const PdfIcon = styled.img`
