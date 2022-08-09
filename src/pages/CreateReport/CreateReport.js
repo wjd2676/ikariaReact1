@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import EndoAI from "../../assets/images/EndoAI03.png";
+import SenaManager from "../../assets/images/EndoAI04.png";
 import { Modal } from "antd";
+import { TreeSelect } from "antd";
+import "antd/dist/antd.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const CreateReport = () => {
@@ -8,12 +12,34 @@ const CreateReport = () => {
 
   const [snapShotData, setSnapShotData] = useState([]);
 
+  const [isSnapShotVisible, setIsSnapShotVisible] = useState(false);
+
+  const [snapShotId, setSnapShotId] = useState();
+
+  const [leader, setLeader] = useState();
+
+  const { TreeNode } = TreeSelect;
+
+  const leaderHandle = (newValue) => {
+    setLeader(newValue);
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const snapShotModalHandle = () => {
+    setIsSnapShotVisible(true);
+  };
+
+  const snapShotIndex = snapShotId - 1;
+
+  const snapShotModalCancle = () => {
+    setIsSnapShotVisible(false);
   };
 
   const location = useLocation();
@@ -43,10 +69,22 @@ const CreateReport = () => {
       .then((res) => setSnapShotData(res));
   }, []);
 
+  if (!snapShotData[0]) return;
+
+  const snapShotLength = snapShotData.length;
+
+  let removePolyp = 0;
+
+  snapShotData.forEach((data) => {
+    if (data.is_remove) {
+      removePolyp += 1;
+    }
+  });
+
   return (
     <div>
       <ResultNav>
-        <SenaManagerImage onClick={goToMain}>SenaManager</SenaManagerImage>
+        <SenaManagerImage onClick={goToMain} src={SenaManager} />
         <SearchInfo>
           <HospitalInfo onClick={showModal}>서울대학교병원</HospitalInfo>
           <div>{roomNumber}</div>
@@ -63,7 +101,7 @@ const CreateReport = () => {
           </p>
           <p>병원 연락처 : 111-1111-1111 </p>
         </Modal>
-        <IkariaIcon src="http://endoai.co.kr/static/common/assets/logo.png" />
+        <EndoAIIcon src={EndoAI} />
       </ResultNav>
       <ReportContainer>
         <TestInfo>
@@ -75,6 +113,7 @@ const CreateReport = () => {
               <InfoContentTitle>검사 일시</InfoContentTitle>
               <InfoContentTitle>검사 소요 시간</InfoContentTitle>
               <InfoContentTitle>등록 일시</InfoContentTitle>
+              <InfoContentTitle>수정 일시</InfoContentTitle>
             </TestColumn>
             <TestRow>
               <InfoContent>C00001</InfoContent>
@@ -83,6 +122,7 @@ const CreateReport = () => {
               <InfoContent>2022/04/26</InfoContent>
               <InfoContent>00:10:06</InfoContent>
               <InfoContent>2022/04/26 11:11:11</InfoContent>
+              <InfoContent>2022/08/04 22:22:22</InfoContent>
             </TestRow>
           </FinderTestInfo>
           <ManagerTestInfo>
@@ -91,38 +131,74 @@ const CreateReport = () => {
               <InfoContentTitle>비고</InfoContentTitle>
               <InfoContentTitle>등록 일시</InfoContentTitle>
               <InfoContentTitle>업데이트 일시</InfoContentTitle>
+              <InfoContentTitle>스냅샷 갯수</InfoContentTitle>
+              <InfoContentTitle>제거된 용종 갯수</InfoContentTitle>
+              <InfoContentTitle>대장정결도</InfoContentTitle>
             </TestColumn>
             <TestRow>
               <InfoContent>C00001</InfoContent>
               <InfoContent>A.B.C</InfoContent>
               <InfoContent>P00001</InfoContent>
               <InfoContent>2022/04/26</InfoContent>
+              <InfoContent>{snapShotLength}</InfoContent>
+              <InfoContent>{removePolyp}</InfoContent>
+              <InfoContentTitle>
+                <TreeSelect
+                  showSearch
+                  style={{
+                    width: "100%",
+                  }}
+                  value={leader}
+                  dropdownStyle={{
+                    maxHeight: 400,
+                    overflow: "auto",
+                  }}
+                  placeholder={leader}
+                  allowClear
+                  treeDefaultExpandAll
+                  onChange={leaderHandle}
+                >
+                  <TreeNode value="상" title="상" />
+                  <TreeNode value="중" title="중" />
+                  <TreeNode value="하" title="하" />
+                </TreeSelect>
+              </InfoContentTitle>
             </TestRow>
           </ManagerTestInfo>
           <ButtonContainer>
-            <PrevButton onClick={goToPrev}>이전페이지로</PrevButton>
             <NextButton onClick={goToNext}>리포트페이지로</NextButton>
+            <PrevButton onClick={goToPrev}>이전페이지로</PrevButton>
           </ButtonContainer>
         </TestInfo>
         <SnapShotInfo>
           {snapShotData.map((data) => (
             <SnapShot key={data.id}>
-              <SnapShotImage />
+              <SnapShotImage
+                src={data.imgUrl}
+                onClick={() => {
+                  setSnapShotId(data.id);
+                  snapShotModalHandle();
+                }}
+              />
               <SnapShotContainer>
                 <SnapShotContent>{data.snap_shot_number}</SnapShotContent>
                 <SnapShotContent>{data.test_time}</SnapShotContent>
-                <SnapShotContent>
-                  용종 탐지 여부 : {data.detect_polyp}
-                </SnapShotContent>
-                <SnapShotContent>
-                  용종 제거 여부 : {data.remove_polyp}
-                </SnapShotContent>
+                <input type="checkbox" defaultChecked={data.is_remove}></input>
               </SnapShotContainer>
             </SnapShot>
           ))}
+          {snapShotId && (
+            <Modal
+              title={snapShotData[snapShotIndex].snap_shot_number}
+              visible={isSnapShotVisible}
+              onCancel={snapShotModalCancle}
+              footer={null}
+            >
+              <ModalImg src={snapShotData[snapShotIndex].imgUrl} />
+            </Modal>
+          )}
         </SnapShotInfo>
       </ReportContainer>
-      <Footer />
     </div>
   );
 };
@@ -135,10 +211,8 @@ const ResultNav = styled.div`
   border-bottom: 2px solid gray;
 `;
 
-const IkariaIcon = styled.img`
-  padding: 10px;
-  margin-right: 20px;
-  height: 100%;
+const EndoAIIcon = styled.img`
+  width: 25%;
   filter: invert(100%);
 `;
 
@@ -158,18 +232,15 @@ const HospitalInfo = styled.div`
   }
 `;
 
-const SenaManagerImage = styled.div`
-  font-size: 55px;
-  font-weight: 500;
-  margin-left: 20px;
+const SenaManagerImage = styled.img`
+  width: 23%;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const ReportContainer = styled.div`
-  margin-top: 100px;
-  margin-left: 150px;
+  margin: 50px 50px 150px 100px;
 `;
 
 const FinderTestInfo = styled.div`
@@ -178,6 +249,7 @@ const FinderTestInfo = styled.div`
 
 const TestInfo = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const ManagerTestInfo = styled.div`
@@ -185,11 +257,11 @@ const ManagerTestInfo = styled.div`
 `;
 
 const TestColumn = styled.div`
-  font-size: 22px;
+  font-size: 17px;
 `;
 
 const TestRow = styled.div`
-  font-size: 22px;
+  font-size: 17px;
 `;
 
 const InfoContentTitle = styled.div`
@@ -202,29 +274,83 @@ const InfoContent = styled.div`
   font-weight: 300;
 `;
 
-const ButtonContainer = styled.div``;
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: -39px;
+  right: 100px;
+  display: flex;
+  flex-direction: row;
+`;
 
-const PrevButton = styled.button``;
+const PrevButton = styled.button`
+  width: 150px;
+  height: 50px;
+  border-radius: 24px;
+  margin: 20px;
+  border: 0;
+  font-weight: 700;
+  display: inline-block;
+  text-transform: uppercase;
+  ::after {
+    width: 100px;
+    margin-left: 20px;
+    display: block;
+    content: "";
+    border-bottom: solid 2px #6b6464;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  }
+`;
 
-const NextButton = styled.button``;
+const NextButton = styled.button`
+  width: 150px;
+  height: 50px;
+  border-radius: 24px;
+  margin: 20px;
+  border: 0;
+  font-weight: 700;
+  display: inline-block;
+  text-transform: uppercase;
+  ::after {
+    width: 100px;
+    margin-left: 20px;
+    display: block;
+    content: "";
+    border-bottom: solid 2px #6b6464;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  }
+`;
 
 const SnapShotInfo = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-top: 55px;
+  margin-top: 50px;
+  overflow: auto;
+  height: 270px;
 `;
 
 const SnapShot = styled.div`
   display: flex;
-  margin-top: 50px;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
 `;
 
-const SnapShotImage = styled.div`
-  border: 2px solid green;
-  width: 200px;
-  height: 200px;
+const SnapShotImage = styled.img`
+  width: 100px;
+  height: 130px;
 `;
 
 const SnapShotContainer = styled.div`
@@ -233,14 +359,15 @@ const SnapShotContainer = styled.div`
   justify-content: center;
   font-size: 17px;
   width: 200px;
-  margin: 15px 15px;
 `;
 
 const SnapShotContent = styled.div`
   display: flex;
 `;
-const Footer = styled.div`
-  width: 100%;
-  height: 100px;
+
+const ModalImg = styled.img`
+  width: 470px;
+  height: 500px;
 `;
+
 export default CreateReport;

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import mainimg from "../../assets/images/main_image.jpg";
+import EndoAI from "../../assets/images/EndoAI03.png";
+import SenaManager from "../../assets/images/EndoAI04.png";
 import MainDropDown from "./MainDropDown/MainDropDown";
 import { useNavigate } from "react-router-dom";
 
@@ -21,11 +23,11 @@ const Main = () => {
   return (
     <MainContainer>
       <MainContent>
-        <IkariaImage src="http://ikariaai.co.kr/static/images/Web/Nav/Logo_White@3x.png" />
-        <SenaManagerImage>SenaManager</SenaManagerImage>
+        <EndoAIImg src={EndoAI} />
+        <SenaManagerImage src={SenaManager} />
         <MainDropDown roomName={roomName} setRoomName={setRoomName} />
         <ButtonContainer>
-          <SearchButton onClick={goToListPage}>검색</SearchButton>
+          <SearchButton onClick={goToListPage}>선택</SearchButton>
           <SearchButton onClick={initButton}>초기화</SearchButton>
         </ButtonContainer>
       </MainContent>
@@ -56,17 +58,17 @@ const MainContent = styled.div`
   width: 30%;
 `;
 
-const IkariaImage = styled.img`
-  filter: invert(100%);
+const EndoAIImg = styled.img`
   width: 100%;
-  padding: 40px;
+  height: 150px;
+  filter: invert(100%);
+  padding: 20px;
 `;
 
-const SenaManagerImage = styled.div`
-  text-align: center;
-  font-size: 40px;
-  font-weight: 500;
-  margin-bottom: 20px;
+const SenaManagerImage = styled.img`
+  width: 100%;
+  height: 130px;
+  padding: 20px;
 `;
 
 const ButtonContainer = styled.div`

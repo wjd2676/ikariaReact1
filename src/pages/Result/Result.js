@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import EndoAI from "../../assets/images/EndoAI03.png";
+import SenaManager from "../../assets/images/EndoAI04.png";
 import { Modal } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -44,7 +46,7 @@ const Result = () => {
   return (
     <div>
       <ResultNav>
-        <SenaManagerImage onClick={goToMain}>SenaManager</SenaManagerImage>
+        <SenaManagerImage onClick={goToMain} src={SenaManager} />
         <SearchInfo>
           <HospitalInfo onClick={showModal}>서울대학교병원</HospitalInfo>
           <div>{roomNumber}</div>
@@ -61,17 +63,17 @@ const Result = () => {
           </p>
           <p>병원 연락처 : 111-1111-1111 </p>
         </Modal>
-        <IkariaIcon src="http://endoai.co.kr/static/common/assets/logo.png" />
+        <EndoAIIcon src={EndoAI} />
       </ResultNav>
       <ResultContainer>
         {resultData.map((data) => (
           <ResultCard key={data.id}>
             <ResultCardContent>
-              <div>날짜 : {data.date}</div>
-              <div>검사번호 : {data.test_number}</div>
-              <div>환자번호 : {data.patient_number}</div>
-              <div>검사자이름 : {data.doctor}</div>
-              <div>검사소요시간 : {data.test_timetaken}</div>
+              <ResultText>날짜 : {data.date}</ResultText>
+              <ResultText>검사번호 : {data.test_number}</ResultText>
+              <ResultText>환자번호 : {data.patient_number}</ResultText>
+              <ResultText>검사자이름 : {data.doctor}</ResultText>
+              <ResultText>검사소요시간 : {data.test_timetaken}</ResultText>
             </ResultCardContent>
             <GoToReport onClick={() => goToReport(data.id)}>
               gotoReport
@@ -84,20 +86,14 @@ const Result = () => {
   );
 };
 
-const Footer = styled.div`
-  width: 100%;
-  height: 300px;
-  border: solid 1px red;
-`;
-
 const ResultCard = styled.div`
-  width: 300px;
+  width: 23%;
   position: relative;
   border-top: 1px solid #eee;
   overflow: hidden;
   padding: 0 0 32px;
   margin: 48px auto 0;
-  width: 300px;
+  min-width: 300px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
   border-radius: 5px;
   text-decoration: none;
@@ -110,6 +106,12 @@ const ResultCardContent = styled.div`
   padding: 30px;
 `;
 
+const ResultText = styled.div`
+  width: 80%;
+  height: 100%;
+  font-size: min(max(1vw, 16px), 25px);
+`;
+
 const ResultNav = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -118,10 +120,8 @@ const ResultNav = styled.div`
   border-bottom: 2px solid gray;
 `;
 
-const IkariaIcon = styled.img`
-  padding: 10px;
-  margin-right: 20px;
-  height: 100%;
+const EndoAIIcon = styled.img`
+  width: 25%;
   filter: invert(100%);
 `;
 
@@ -142,10 +142,8 @@ const HospitalInfo = styled.div`
   }
 `;
 
-const SenaManagerImage = styled.div`
-  font-size: 55px;
-  font-weight: 500;
-  margin-left: 20px;
+const SenaManagerImage = styled.img`
+  width: 23%;
   &:hover {
     cursor: pointer;
   }
@@ -159,18 +157,34 @@ const ResultContainer = styled.div`
 `;
 
 const GoToReport = styled.button`
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  width: 100px;
-  height: 35px;
-  background-color: white;
-  opacity: 0.4;
+  width: 150px;
+  height: 50px;
+  border-radius: 24px;
+  margin: 10px 20px 10px 135px;
+  border: 0;
+  font-weight: 700;
+  display: inline-block;
+  text-transform: uppercase;
+  ::after {
+    width: 100px;
+    margin-left: 20px;
+    display: block;
+    content: "";
+    border-bottom: solid 2px #6b6464;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+  }
   &:hover {
-    background-color: black;
-    color: white;
     cursor: pointer;
   }
+  &:hover:after {
+    transform: scaleX(1);
+  }
+`;
+
+const Footer = styled.div`
+  width: 100%;
+  height: 80px;
 `;
 
 export default Result;
