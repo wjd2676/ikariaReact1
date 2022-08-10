@@ -337,8 +337,27 @@ const NextButton = styled.button`
 const SnapShotInfo = styled.div`
   display: flex;
   margin-top: 50px;
-  overflow: auto;
+  overflow-y: scroll;
   height: 270px;
+  ::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  /* 트랙 (Track) */
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  /* 핸들 (Handle) */
+  ::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+  }
+
+  /* Hover시 핸들 (Handle) */
+  ::-webkit-scrollbar-thumb:hover {
+    background: gray;
+  }
 `;
 
 const SnapShot = styled.div`
