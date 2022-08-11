@@ -190,7 +190,7 @@ const PatientReport = () => {
                 </ReportLitag>
                 <ReportLitag>
                   Did get one complaint from a traffic controller about a
-                  beigbour, which i have passed onto JHJ to pass onto the
+                  beigbour, which i have passed onto JHJ tos pass onto the
                   council
                 </ReportLitag>
               </ReportCoulmn>
