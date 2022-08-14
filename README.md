@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+## **1. 프로젝트 소개**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [Endo-Ai] Front-end Project
+- 정해진 1개의 병원을 Default로 설정
+- BackEnd Data 없이 MockData로만 구성되었습니다.
+- PDF,카카오 공유, mail 공유 기능은 구현했지만 body값은 임시로 넣었습니다.
+- 공유하는 페이지의 보안은 고려하지않고 만든 페이지입니다.
 
-## Available Scripts
+### **개발 인원 및 기간**
 
-In the project directory, you can run:
+- 개발기간 : 2022/08/04 ~ 2022/08/10
+- 개발 인원
 
-### `npm start`
+  - 프론트엔드(1명) : 정현준
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## **적용 기술 및 구현 기능**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Main
 
-### `npm test`
+  - DropDown 형식으로 Room을 선택할 수 있게 구현
+  - Room을 state에 저장 후 검색 클릭시 pathParameter로 Room정보를 넘김
+  - 초기화 버튼 클릭시 State를 초기화시킴
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Result
+  - CardList 형식으로 환자 정보를 나타냄
+  - 반응형 페이지로 구현하여 CardList가 max-width 에서는 총 4개의 Card를 보여줌
+  - min-width 로 최소 크기를 지정
+  - 병원 클릭시 병원 정보를 나타내는 modal 구현
+  - GoToReport 클릭시 pathParameter로 환자 정보를 넘김
+- CreateReport
+  - snapShot Image 클릭시 image를 확대해서 보여주는 modal 구현
+- PatientReport
+  - snapshot.json의 image의 boolean 값이 true인것만 화면에 나타나게 구현
+  - kakao 공유 구현
+  - mail 공유 구현
+  - 현재 페이지 PDF 저장 구현
 
-### `npm run build`
+### **적용 기술**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Front-End : HTML, Styled-component, Javascript , React, antd-Library
